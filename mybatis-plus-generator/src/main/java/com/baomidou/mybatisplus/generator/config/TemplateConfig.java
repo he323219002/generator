@@ -66,6 +66,11 @@ public class TemplateConfig {
     private String serviceImpl;
 
     /**
+     * 设置Enum模板路径
+     */
+    private String enumerate;
+
+    /**
      * 是否禁用实体模板（默认 false）
      */
     private boolean disableEntity;
@@ -81,6 +86,7 @@ public class TemplateConfig {
         this.xml = ConstVal.TEMPLATE_XML;
         this.service = ConstVal.TEMPLATE_SERVICE;
         this.serviceImpl = ConstVal.TEMPLATE_SERVICE_IMPL;
+        this.enumerate = ConstVal.TEMPLATE_ENUMERATE;
     }
 
     /**
@@ -168,6 +174,10 @@ public class TemplateConfig {
         return serviceImpl;
     }
 
+    public String getEnumerate() {
+        return enumerate;
+    }
+
     public String getMapper() {
         return mapper;
     }
@@ -243,11 +253,22 @@ public class TemplateConfig {
         /**
          * 设置service模板路径
          *
-         * @param serviceTemplate     service接口模板路径
+         * @param serviceTemplate service接口模板路径
          * @return this
          */
         public Builder service(@NotNull String serviceTemplate) {
             this.templateConfig.service = serviceTemplate;
+            return this;
+        }
+
+        /**
+         * 设置service模板路径
+         *
+         * @param enumerateTemplate 枚举模板路径
+         * @return this
+         */
+        public Builder enumerate(@NotNull String enumerateTemplate) {
+            this.templateConfig.enumerate = enumerateTemplate;
             return this;
         }
 

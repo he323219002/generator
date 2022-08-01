@@ -2,36 +2,22 @@ package ${package.Entity};
 
 <#list table.importPackages as pkg>
 import ${pkg};
+import lombok.Data;
+<#if (table.enumerateList?size > 0)>
+import ${package.Enum}.*;
+</#if>
 </#list>
-<#if springdoc>
-import io.swagger.v3.oas.annotations.media.Schema;
-<#elseif swagger>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-</#if>
-<#if entityLombokModel>
-import lombok.Getter;
-import lombok.Setter;
-    <#if chainModel>
-import lombok.experimental.Accessors;
-    </#if>
-</#if>
+
 
 /**
- * <p>
- * ${table.comment!}
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
-<#if entityLombokModel>
-@Getter
-@Setter
-    <#if chainModel>
-@Accessors(chain = true)
-    </#if>
-</#if>
+* <p>
+    * ${table.comment!}
+    * </p>
+*
+* @author ${author}
+* @since ${date}
+*/
+@Data
 <#if table.convert>
 @TableName("${schemaName}${table.name}")
 </#if>
@@ -66,12 +52,15 @@ public class ${entity} {
     @ApiModelProperty("${field.comment}")
         <#else>
     /**
-     * ${field.comment}
-     */
+    * ${field.comment}
+    */
         </#if>
     </#if>
+    <#if field.enumerate>
+    private ${field.enumerateName} ${field.propertyName};
+    <#else>
     <#if field.keyFlag>
-        <#-- 主键 -->
+    <#-- 主键 -->
         <#if field.keyIdentityFlag>
     @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
         <#elseif idType??>
@@ -79,7 +68,7 @@ public class ${entity} {
         <#elseif field.convert>
     @TableId("${field.annotationColumnName}")
         </#if>
-        <#-- 普通字段 -->
+    <#-- 普通字段 -->
     <#elseif field.fill??>
     <#-- -----   存在字段填充设置   ----->
         <#if field.convert>
@@ -92,39 +81,17 @@ public class ${entity} {
     </#if>
     <#-- 乐观锁注解 -->
     <#if field.versionField>
-    @Version
+        @Version
     </#if>
     <#-- 逻辑删除注解 -->
     <#if field.logicDeleteField>
     @TableLogic
     </#if>
     private ${field.propertyType} ${field.propertyName};
+    </#if>
 </#list>
 <#------------  END 字段循环遍历  ---------->
-<#if !entityLombokModel>
-    <#list table.fields as field>
-        <#if field.propertyType == "boolean">
-            <#assign getprefix="is"/>
-        <#else>
-            <#assign getprefix="get"/>
-        </#if>
 
-    public ${field.propertyType} ${getprefix}${field.capitalName}() {
-        return ${field.propertyName};
-    }
-
-    <#if chainModel>
-    public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
-    <#else>
-    public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
-    </#if>
-        this.${field.propertyName} = ${field.propertyName};
-        <#if chainModel>
-        return this;
-        </#if>
-    }
-    </#list>
-</#if>
 <#if entityColumnConstant>
     <#list table.fields as field>
 
@@ -140,21 +107,6 @@ public class ${entity} {
     <#else>
         return null;
     </#if>
-    }
-</#if>
-<#if !entityLombokModel>
-
-    @Override
-    public String toString() {
-        return "${entity}{" +
-    <#list table.fields as field>
-        <#if field_index==0>
-            "${field.propertyName} = " + ${field.propertyName} +
-        <#else>
-            ", ${field.propertyName} = " + ${field.propertyName} +
-        </#if>
-    </#list>
-        "}";
     }
 </#if>
 }

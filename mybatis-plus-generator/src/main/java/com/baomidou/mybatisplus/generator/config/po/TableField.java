@@ -29,6 +29,7 @@ import com.baomidou.mybatisplus.generator.jdbc.DatabaseMetaDataWrapper;
 import org.apache.ibatis.type.JdbcType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,6 +76,21 @@ public class TableField {
     private MetaInfo metaInfo;
 
     private final Entity entity;
+
+    /**
+     * 枚举信息
+     */
+    private List<Map<String, Object>> enumerateMapList;
+
+    /**
+     * 是否为枚举字段
+     */
+    private boolean enumerate;
+
+    /**
+     * 枚举字段类名称 entityName + columnName + Enum
+     */
+    private String enumerateName;
 
     private final DataSourceConfig dataSourceConfig;
 
@@ -237,6 +253,22 @@ public class TableField {
         return this;
     }
 
+    public List<Map<String, Object>> getEnumerateMapList() {
+        return enumerateMapList;
+    }
+
+    public void setEnumerateMapList(List<Map<String, Object>> enumerateMapList) {
+        this.enumerateMapList = enumerateMapList;
+    }
+
+    public void setEnumerate(boolean enumerate) {
+        this.enumerate = enumerate;
+    }
+
+    public boolean isEnumerate() {
+        return enumerate;
+    }
+
     public boolean isConvert() {
         return convert;
     }
@@ -300,6 +332,14 @@ public class TableField {
         this.metaInfo = metaInfo;
     }
 
+    public String getEnumerateName() {
+        return enumerateName;
+    }
+
+    public void setEnumerateName(String enumerateName) {
+        this.enumerateName = enumerateName;
+    }
+
     /**
      * 元数据信息
      *
@@ -354,6 +394,7 @@ public class TableField {
         public JdbcType getJdbcType() {
             return jdbcType;
         }
+
 
         @Override
         public String toString() {

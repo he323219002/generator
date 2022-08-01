@@ -35,6 +35,7 @@ public interface ConstVal {
     String MAPPER = "Mapper";
     String XML = "Xml";
     String CONTROLLER = "Controller";
+    String ENUMERATE = "Enum";
     String PARENT = "Parent";
 
     String JAVA_TMPDIR = "java.io.tmpdir";
@@ -79,6 +80,12 @@ public interface ConstVal {
      * ServiceImpl模板路径
      */
     String TEMPLATE_SERVICE_IMPL = "/templates/serviceImpl.java";
+
+    /**
+     * Enum模板路径
+     */
+    String TEMPLATE_ENUMERATE = "/templates/enumerate.java";
+
 
     String VM_LOAD_PATH_KEY = "file.resource.loader.class";
     String VM_LOAD_PATH_VALUE = "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader";

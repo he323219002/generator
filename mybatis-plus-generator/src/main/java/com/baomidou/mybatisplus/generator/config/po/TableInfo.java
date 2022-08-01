@@ -99,6 +99,17 @@ public class TableInfo {
     private String controllerName;
 
     /**
+     * 枚举名称
+     */
+    private String enumerateName;
+
+
+    /**
+     * 枚举字段
+     */
+    private final List<TableField> enumerateList = new ArrayList<>();
+
+    /**
      * 表字段
      */
     private final List<TableField> fields = new ArrayList<>();
@@ -179,6 +190,16 @@ public class TableInfo {
         } else {
             this.fields.add(field);
         }
+    }
+
+    /**
+     * 添加枚举
+     *
+     * @param field 字段
+     * @since 3.5.0
+     */
+    public void addEnumField(@NotNull TableField field) {
+        this.enumerateList.add(field);
     }
 
     /**
@@ -280,6 +301,7 @@ public class TableInfo {
         this.serviceName = strategyConfig.service().getConverterServiceFileName().convert(entityName);
         this.serviceImplName = strategyConfig.service().getConverterServiceImplFileName().convert(entityName);
         this.controllerName = strategyConfig.controller().getConverterFileName().convert(entityName);
+        this.enumerateName = strategyConfig.enumerate().getConverterFileName().convert(entityName);
         this.importPackage();
     }
 
@@ -339,6 +361,14 @@ public class TableInfo {
 
     public String getControllerName() {
         return controllerName;
+    }
+
+    public String getEnumerateName() {
+        return enumerateName;
+    }
+
+    public List<TableField> getEnumerateList() {
+        return enumerateList;
     }
 
     @NotNull

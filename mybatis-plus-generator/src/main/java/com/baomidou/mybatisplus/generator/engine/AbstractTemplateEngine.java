@@ -15,12 +15,15 @@
  */
 package com.baomidou.mybatisplus.generator.engine;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
+import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.util.FileUtils;
 import com.baomidou.mybatisplus.generator.util.RuntimeUtils;
 import org.jetbrains.annotations.NotNull;
@@ -30,10 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 
@@ -160,7 +160,6 @@ public abstract class AbstractTemplateEngine {
      * @since 3.5.0
      */
     protected void outputController(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
-        // MpController.java
         String controllerPath = getPathInfo(OutputFile.controller);
         if (StringUtils.isNotBlank(tableInfo.getControllerName()) && StringUtils.isNotBlank(controllerPath)) {
             getTemplateFilePath(TemplateConfig::getController).ifPresent(controller -> {
@@ -170,6 +169,25 @@ public abstract class AbstractTemplateEngine {
             });
         }
     }
+
+    protected void outputEnumerate(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
+        // MpController.java
+        String enumeratePath = getPathInfo(OutputFile.enumerate);
+        if (CollectionUtils.isNotEmpty(tableInfo.getEnumerateList()) && StringUtils.isNotBlank(enumeratePath)) {
+            getTemplateFilePath(TemplateConfig::getEnumerate).ifPresent(enumerate -> {
+                List<TableField> enumerateList = (List<TableField>) objectMap.get("enumerateList");
+                for (TableField enumerateField : enumerateList) {
+                    // 更新处理字段
+                    String columnName = NamingStrategy.capitalFirst(enumerateField.getColumnName());
+                    enumerateField.setColumnName(columnName);
+                    objectMap.put("curEnumField", enumerateField);
+                    String enumerateFile = String.format(enumeratePath + File.separator + tableInfo.getEnumerateName() + suffixJavaOrKt(), columnName);
+                    outputFile(new File(enumerateFile), objectMap, enumerate, getConfigBuilder().getStrategyConfig().enumerate().isFileOverride());
+                }
+            });
+        }
+    }
+
 
     /**
      * 输出文件（3.5.4版本会删除此方法）
@@ -261,6 +279,8 @@ public abstract class AbstractTemplateEngine {
                 outputService(tableInfo, objectMap);
                 // controller
                 outputController(tableInfo, objectMap);
+                // enumerate
+                outputEnumerate(tableInfo, objectMap);
             });
         } catch (Exception e) {
             throw new RuntimeException("无法创建文件，请检查配置信息！", e);
@@ -346,6 +366,8 @@ public abstract class AbstractTemplateEngine {
         objectMap.putAll(serviceData);
         Map<String, Object> entityData = strategyConfig.entity().renderData(tableInfo);
         objectMap.putAll(entityData);
+        Map<String, Object> enumerateData = strategyConfig.enumerate().renderData(tableInfo);
+        objectMap.putAll(enumerateData);
         objectMap.put("config", config);
         objectMap.put("package", config.getPackageConfig().getPackageInfo());
         GlobalConfig globalConfig = config.getGlobalConfig();

@@ -15,6 +15,7 @@
  */
 package com.baomidou.mybatisplus.generator.query;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
@@ -22,12 +23,14 @@ import com.baomidou.mybatisplus.generator.config.builder.Entity;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.jdbc.DatabaseMetaDataWrapper;
 import com.baomidou.mybatisplus.generator.type.ITypeConvertHandler;
 import com.baomidou.mybatisplus.generator.type.TypeRegistry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,9 +118,43 @@ public class DefaultQuery extends AbstractDatabaseQuery {
             }
             field.setPropertyName(propertyName, columnType);
             field.setMetaInfo(metaInfo);
+            List<Map<String, Object>> enumerateFieldList = getEnumerateFields(metaInfo);
+            field.setEnumerate(false);
+            if (CollectionUtils.isNotEmpty(enumerateFieldList)) {
+                String enumName = String.format("%s%sEnum", NamingStrategy.capitalFirst(tableInfo.getName()),
+                    NamingStrategy.capitalFirst(field.getColumnName()));
+                field.setEnumerateName(enumName);
+                field.setEnumerateMapList(enumerateFieldList);
+                field.setEnumerate(true);
+                field.setComment(metaInfo.getRemarks());
+                tableInfo.addEnumField(field);
+            }
             tableInfo.addField(field);
         });
         tableInfo.processTable();
+    }
+
+    /**
+     * 填充枚举字段
+     *
+     * @param metaInfo
+     */
+    private List<Map<String, Object>> getEnumerateFields(TableField.MetaInfo metaInfo) {
+        String remarks = metaInfo.getRemarks();
+
+        List<Map<String, Object>> enumMapList = new ArrayList<>();
+        if (StringUtils.isNotBlank(remarks) && remarks.startsWith("enum=")) {
+            String enumEntryStr = remarks.substring("enum=".length(), remarks.length());
+            for (String s : enumEntryStr.split(";")) {
+                HashMap<String, Object> enumMap = new HashMap<>();
+                String[] entry = s.split(":");
+                enumMap.put("enumCode", Integer.valueOf(entry[0]));
+                enumMap.put("enumVal", String.valueOf(entry[1]));
+                enumMap.put("enumDesc", String.valueOf(entry[2]));
+                enumMapList.add(enumMap);
+            }
+        }
+        return enumMapList;
     }
 
     protected Map<String, DatabaseMetaDataWrapper.Column> getColumnsInfo(String tableName) {

@@ -121,6 +121,8 @@ public class StrategyConfig {
 
     private final Service.Builder serviceBuilder = new Service.Builder(this);
 
+    private final Enumerate.Builder enumerateBuilder = new Enumerate.Builder(this);
+
     private Entity entity;
 
     private Controller controller;
@@ -128,6 +130,9 @@ public class StrategyConfig {
     private Mapper mapper;
 
     private Service service;
+
+    private Enumerate enumerate;
+
 
     /**
      * 实体配置构建者
@@ -177,6 +182,19 @@ public class StrategyConfig {
             this.controller = controllerBuilder.get();
         }
         return controller;
+    }
+
+    /**
+     * 枚举配置
+     *
+     * @return 枚举配置
+     */
+    @NotNull
+    public Enumerate enumerate() {
+        if (enumerate == null) {
+            this.enumerate = enumerateBuilder.get();
+        }
+        return enumerate;
     }
 
     /**
