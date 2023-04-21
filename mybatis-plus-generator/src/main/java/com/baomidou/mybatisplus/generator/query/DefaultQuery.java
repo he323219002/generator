@@ -121,7 +121,7 @@ public class DefaultQuery extends AbstractDatabaseQuery {
             List<Map<String, Object>> enumerateFieldList = getEnumerateFields(metaInfo);
             field.setEnumerate(false);
             if (CollectionUtils.isNotEmpty(enumerateFieldList)) {
-                String enumName = String.format("%s%sEnum", NamingStrategy.capitalFirst(tableInfo.getName()),
+                String enumName = String.format("%s%sEnum",  entity.getNameConvert().entityNameConvert(tableInfo),
                     NamingStrategy.capitalFirst(field.getColumnName()));
                 field.setEnumerateName(enumName);
                 field.setEnumerateMapList(enumerateFieldList);

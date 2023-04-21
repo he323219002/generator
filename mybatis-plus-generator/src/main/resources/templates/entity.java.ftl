@@ -2,11 +2,11 @@ package ${package.Entity};
 
 <#list table.importPackages as pkg>
 import ${pkg};
+</#list>
 import lombok.Data;
 <#if (table.enumerateList?size > 0)>
 import ${package.Enum}.*;
 </#if>
-</#list>
 
 
 /**
