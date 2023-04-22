@@ -37,6 +37,10 @@ public interface ConstVal {
     String CONTROLLER = "Controller";
     String ENUMERATE = "Enum";
     String PARENT = "Parent";
+    String MAPSTRUCT = "MapStruct";
+    String DOMAIN_ENTITY = "DOMAIN_ENTITY";
+    String DTO = "Dto";
+
 
     String JAVA_TMPDIR = "java.io.tmpdir";
     String UTF8 = StandardCharsets.UTF_8.name();
@@ -85,6 +89,10 @@ public interface ConstVal {
      * Enum模板路径
      */
     String TEMPLATE_ENUMERATE = "/templates/enumerate.java";
+
+    String TEMPLATE_MAPSTRUCT = "/templates/mapstruct.java";
+    String TEMPLATE_DTO = "/templates/dto.java";
+    String TEMPLATE_DOMAIN_ENTITY = "/templates/domainEntity.java";
 
 
     String VM_LOAD_PATH_KEY = "file.resource.loader.class";

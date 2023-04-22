@@ -35,5 +35,8 @@ public enum OutputFile {
      */
     @Deprecated
     other,
-    parent;
+    parent,
+    domainEntity,
+    dto
+    ;
 }

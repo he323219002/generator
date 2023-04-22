@@ -103,6 +103,21 @@ public class TableInfo {
      */
     private String enumerateName;
 
+    /**
+     * mapstruct名称
+     */
+    private String mapstructName;
+
+    /**
+     * 领域entity名称
+     */
+    private String  domainEntityName;
+
+    /**
+     * dto名称
+     */
+    private String dtoName;
+
 
     /**
      * 枚举字段
@@ -302,6 +317,9 @@ public class TableInfo {
         this.serviceImplName = strategyConfig.service().getConverterServiceImplFileName().convert(entityName);
         this.controllerName = strategyConfig.controller().getConverterFileName().convert(entityName);
         this.enumerateName = strategyConfig.enumerate().getConverterFileName().convert(entityName);
+        this.mapstructName = strategyConfig.mapstruct().getConverterFileName().convert(entityName);
+//        this.dtoName = ;
+//        this.domainEntityName = ;
         this.importPackage();
     }
 
@@ -369,6 +387,18 @@ public class TableInfo {
 
     public List<TableField> getEnumerateList() {
         return enumerateList;
+    }
+
+    public String getMapstructName() {
+        return mapstructName;
+    }
+
+    public String getDomainEntityName() {
+        return domainEntityName;
+    }
+
+    public String getDtoName() {
+        return dtoName;
     }
 
     @NotNull

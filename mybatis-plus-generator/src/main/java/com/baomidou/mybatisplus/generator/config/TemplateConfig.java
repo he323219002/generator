@@ -70,6 +70,10 @@ public class TemplateConfig {
      */
     private String enumerate;
 
+    private String mapStruct;
+//    private String dto;
+//    private String domainEntity;
+
     /**
      * 是否禁用实体模板（默认 false）
      */
@@ -149,6 +153,12 @@ public class TemplateConfig {
                     case SERVICE_IMPL:
                         this.serviceImpl = null;
                         break;
+                    case ENUMERATE:
+                        this.enumerate = null;
+                        break;
+                    case MAPSTRUCT:
+                        this.mapStruct = null;
+                        break;
                     default:
                 }
             }
@@ -176,6 +186,10 @@ public class TemplateConfig {
 
     public String getEnumerate() {
         return enumerate;
+    }
+
+    public String getMapStruct() {
+        return mapStruct;
     }
 
     public String getMapper() {
@@ -262,7 +276,18 @@ public class TemplateConfig {
         }
 
         /**
-         * 设置service模板路径
+         * 设置serviceImpl模板路径
+         *
+         * @param serviceImplTemplate service实现类模板路径
+         * @return this
+         */
+        public Builder serviceImpl(@NotNull String serviceImplTemplate) {
+            this.templateConfig.serviceImpl = serviceImplTemplate;
+            return this;
+        }
+
+        /**
+         * 设置enumerate模板路径
          *
          * @param enumerateTemplate 枚举模板路径
          * @return this
@@ -272,14 +297,13 @@ public class TemplateConfig {
             return this;
         }
 
-        /**
-         * 设置serviceImpl模板路径
-         *
-         * @param serviceImplTemplate service实现类模板路径
-         * @return this
-         */
-        public Builder serviceImpl(@NotNull String serviceImplTemplate) {
-            this.templateConfig.serviceImpl = serviceImplTemplate;
+        public Builder mapstruct() {
+            this.templateConfig.mapStruct = ConstVal.TEMPLATE_MAPSTRUCT;
+            return this;
+        }
+
+        public Builder mapstruct(@NotNull String mapstructTemplate) {
+            this.templateConfig.mapStruct = mapstructTemplate;
             return this;
         }
 

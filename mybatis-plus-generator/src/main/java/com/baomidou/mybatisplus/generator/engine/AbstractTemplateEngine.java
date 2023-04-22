@@ -170,6 +170,11 @@ public abstract class AbstractTemplateEngine {
         }
     }
 
+    /**
+     * 输出Enumerate文件
+     * @param tableInfo
+     * @param objectMap
+     */
     protected void outputEnumerate(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
         // MpController.java
         String enumeratePath = getPathInfo(OutputFile.enumerate);
@@ -188,6 +193,67 @@ public abstract class AbstractTemplateEngine {
         }
     }
 
+    /**
+     * 输出mapstruct文件
+     * @param tableInfo
+     * @param objectMap
+     */
+    protected void outputMapStruct(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
+        String mapstructPath = getPathInfo(OutputFile.mapstruct);
+        if (StringUtils.isNotBlank(tableInfo.getMapstructName()) && StringUtils.isNotBlank(mapstructPath)) {
+            getTemplateFilePath(TemplateConfig::getMapStruct).ifPresent(mapstruct -> {
+                String entityName = tableInfo.getEntityName();
+                String mapstructFile = String.format((mapstructPath + File.separator + tableInfo.getMapstructName() + suffixJavaOrKt()), entityName);
+                outputFile(new File(mapstructFile), objectMap, mapstruct, getConfigBuilder().getStrategyConfig().mapstruct().isFileOverride());
+            });
+        }
+    }
+
+    /**
+     * 输出Dto文件
+     * @param tableInfo
+     * @param objectMap
+     */
+    protected void outputDto(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
+//        String enumeratePath = getPathInfo(OutputFile.enumerate);
+//        if (CollectionUtils.isNotEmpty(tableInfo.getEnumerateList()) && StringUtils.isNotBlank(enumeratePath)) {
+//            getTemplateFilePath(TemplateConfig::getEnumerate).ifPresent(enumerate -> {
+//                List<TableField> enumerateList = (List<TableField>) objectMap.get("enumerateList");
+//                for (TableField enumerateField : enumerateList) {
+//                    // 更新处理字段
+//                    String columnName = NamingStrategy.capitalFirst(enumerateField.getColumnName());
+//                    enumerateField.setColumnName(columnName);
+//                    objectMap.put("curEnumField", enumerateField);
+//                    String enumerateFile = String.format(enumeratePath + File.separator + tableInfo.getEnumerateName() + suffixJavaOrKt(), columnName);
+//                    outputFile(new File(enumerateFile), objectMap, enumerate, getConfigBuilder().getStrategyConfig().enumerate().isFileOverride());
+//                }
+//            });
+//        }
+    }
+
+
+
+    /**
+     * 输出Entity文件
+     * @param tableInfo
+     * @param objectMap
+     */
+    protected void outputDomainEntity(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
+//        String enumeratePath = getPathInfo(OutputFile.enumerate);
+//        if (CollectionUtils.isNotEmpty(tableInfo.getEnumerateList()) && StringUtils.isNotBlank(enumeratePath)) {
+//            getTemplateFilePath(TemplateConfig::getEnumerate).ifPresent(enumerate -> {
+//                List<TableField> enumerateList = (List<TableField>) objectMap.get("enumerateList");
+//                for (TableField enumerateField : enumerateList) {
+//                    // 更新处理字段
+//                    String columnName = NamingStrategy.capitalFirst(enumerateField.getColumnName());
+//                    enumerateField.setColumnName(columnName);
+//                    objectMap.put("curEnumField", enumerateField);
+//                    String enumerateFile = String.format(enumeratePath + File.separator + tableInfo.getEnumerateName() + suffixJavaOrKt(), columnName);
+//                    outputFile(new File(enumerateFile), objectMap, enumerate, getConfigBuilder().getStrategyConfig().enumerate().isFileOverride());
+//                }
+//            });
+//        }
+    }
 
     /**
      * 输出文件（3.5.4版本会删除此方法）
@@ -281,6 +347,8 @@ public abstract class AbstractTemplateEngine {
                 outputController(tableInfo, objectMap);
                 // enumerate
                 outputEnumerate(tableInfo, objectMap);
+                // mapstruct
+                outputMapStruct(tableInfo,objectMap);
             });
         } catch (Exception e) {
             throw new RuntimeException("无法创建文件，请检查配置信息！", e);

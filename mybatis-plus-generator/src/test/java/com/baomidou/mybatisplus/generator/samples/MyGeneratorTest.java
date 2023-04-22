@@ -2,6 +2,7 @@ package com.baomidou.mybatisplus.generator.samples;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ import java.util.Collections;
 public class MyGeneratorTest extends BaseGeneratorTest {
 
     @Test
-    public void testGenerate(){
+    public void testGenerate() {
 
         System.out.println("中文");
         FastAutoGenerator.create("jdbc:mysql://192.168.195.150:3306/jframe", "root", "home")
@@ -34,9 +35,18 @@ public class MyGeneratorTest extends BaseGeneratorTest {
             .strategyConfig(builder -> {
                 builder.addInclude("acc_account") // 设置需要生成的表名
                     .addTablePrefix("acc_", "c_")
-                    .entityBuilder()
+                    .entityBuilder().formatFileName("%sDbo")
                     .enableFileOverride()
+                    .serviceBuilder()
+                    .formatServiceFileName("%sService")
+                    .mapstructBuilder()
+                    .enableFileOverride();
                 ; // 设置过滤表前缀
+            })
+            .templateConfig(builder -> {
+//             禁用模板类型
+//                builder.disable(TemplateType.ENUMERATE);
+                builder.mapstruct();
             })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();

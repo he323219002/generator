@@ -80,6 +80,13 @@ public class PackageConfig {
     private String enumerate = "enumerate";
 
     /**
+     * mapstruct
+     */
+    private String mapstruct = "mapstruct";
+//    private String dto = "dto";
+//    private String domainEntity = "domainEntity";
+
+    /**
      * 路径配置信息
      */
     private Map<OutputFile, String> pathInfo;
@@ -132,6 +139,8 @@ public class PackageConfig {
             packageInfo.put(ConstVal.CONTROLLER, this.joinPackage(this.getController()));
             packageInfo.put(ConstVal.ENUMERATE, this.joinPackage(this.getEnumerate()));
             packageInfo.put(ConstVal.PARENT, this.getParent());
+
+            packageInfo.put(ConstVal.MAPSTRUCT, this.joinPackage(this.getMapstruct()));
         }
         return Collections.unmodifiableMap(this.packageInfo);
     }
@@ -177,6 +186,10 @@ public class PackageConfig {
 
     public String getEnumerate() {
         return enumerate;
+    }
+
+    public String getMapstruct() {
+        return mapstruct;
     }
 
     public Map<OutputFile, String> getPathInfo() {

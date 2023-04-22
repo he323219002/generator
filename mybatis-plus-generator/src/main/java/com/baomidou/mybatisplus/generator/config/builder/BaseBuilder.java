@@ -54,6 +54,13 @@ public class BaseBuilder implements IConfigBuilder<StrategyConfig> {
     }
 
     @NotNull
+    public Mapstruct.Builder mapstructBuilder() {
+        return strategyConfig.mapstructBuilder();
+    }
+
+
+
+    @NotNull
     @Override
     public StrategyConfig build() {
         this.strategyConfig.validate();
