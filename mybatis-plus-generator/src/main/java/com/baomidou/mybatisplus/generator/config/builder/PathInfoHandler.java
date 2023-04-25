@@ -77,6 +77,8 @@ class PathInfoHandler {
         putPathInfo(OutputFile.parent, ConstVal.PARENT);
 
         putPathInfo(templateConfig.getMapStruct(),OutputFile.mapstruct,ConstVal.MAPSTRUCT);
+        putPathInfo(templateConfig.getDto(),OutputFile.dto,ConstVal.DTO);
+        putPathInfo(templateConfig.getDomainEntity(),OutputFile.domainEntity,ConstVal.DOMAIN_ENTITY);
     }
 
     public Map<OutputFile, String> getPathInfo() {

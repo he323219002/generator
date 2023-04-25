@@ -124,8 +124,10 @@ public class StrategyConfig {
     private final Enumerate.Builder enumerateBuilder = new Enumerate.Builder(this);
 
     private final Mapstruct.Builder mapstructBuilder = new Mapstruct.Builder(this);
-//    private final Dto.Builder mapstructBuilder = new Mapstruct.Builder(this);
-//    private final DomainEntity.Builder mapstructBuilder = new Mapstruct.Builder(this);
+
+    private final Dto.Builder dtoBuilder = new Dto.Builder(this);
+
+    private final DomainEntity.Builder domainEntityBuilder = new DomainEntity.Builder(this);
 
     private Entity entity;
 
@@ -138,8 +140,10 @@ public class StrategyConfig {
     private Enumerate enumerate;
 
     private Mapstruct mapstruct;
-//    private Dto mapstruct;
-//    private DomainEntity mapstruct;
+
+    private Dto dto;
+
+    private DomainEntity domainEntity;
 
 
     /**
@@ -216,6 +220,16 @@ public class StrategyConfig {
         return mapstructBuilder;
     }
 
+    @NotNull
+    public Dto.Builder dtoBuilder() {
+        return dtoBuilder;
+    }
+
+    @NotNull
+    public DomainEntity.Builder domainEntityBuilder() {
+        return domainEntityBuilder;
+    }
+
     /**
      * mapstruct配置
      *
@@ -229,6 +243,32 @@ public class StrategyConfig {
         return mapstruct;
     }
 
+    /**
+     * dto配置
+     *
+     * @return dto配置
+     */
+    @NotNull
+    public Dto dto() {
+        if (dto == null) {
+            this.dto = dtoBuilder.get();
+        }
+        return dto;
+    }
+
+
+    /**
+     * dto配置
+     *
+     * @return dto配置
+     */
+    @NotNull
+    public DomainEntity domainEntity() {
+        if (domainEntity == null) {
+            this.domainEntity = domainEntityBuilder.get();
+        }
+        return domainEntity;
+    }
 
     /**
      * Mapper配置构建者

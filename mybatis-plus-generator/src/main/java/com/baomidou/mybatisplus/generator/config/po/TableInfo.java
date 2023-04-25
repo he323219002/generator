@@ -111,7 +111,7 @@ public class TableInfo {
     /**
      * 领域entity名称
      */
-    private String  domainEntityName;
+    private String domainEntityName;
 
     /**
      * dto名称
@@ -318,8 +318,8 @@ public class TableInfo {
         this.controllerName = strategyConfig.controller().getConverterFileName().convert(entityName);
         this.enumerateName = strategyConfig.enumerate().getConverterFileName().convert(entityName);
         this.mapstructName = strategyConfig.mapstruct().getConverterFileName().convert(entityName);
-//        this.dtoName = ;
-//        this.domainEntityName = ;
+        this.dtoName = strategyConfig.dto().getConverterFileName().convert(entityName);
+        this.domainEntityName = strategyConfig.domainEntity().getConverterFileName().convert(entityName);
         this.importPackage();
     }
 

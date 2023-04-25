@@ -40,13 +40,19 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                     .serviceBuilder()
                     .formatServiceFileName("%sService")
                     .mapstructBuilder()
-                    .enableFileOverride();
+                    .enableFileOverride()
+                    .dtoBuilder()
+                    .enableFileOverride()
+                    .domainEntityBuilder()
+                    .enableFileOverride()
                 ; // 设置过滤表前缀
             })
             .templateConfig(builder -> {
 //             禁用模板类型
 //                builder.disable(TemplateType.ENUMERATE);
                 builder.mapstruct();
+                builder.dto();
+                builder.domainEntity();
             })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();

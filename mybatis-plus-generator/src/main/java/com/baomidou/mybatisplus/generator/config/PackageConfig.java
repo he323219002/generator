@@ -83,8 +83,16 @@ public class PackageConfig {
      * mapstruct
      */
     private String mapstruct = "mapstruct";
-//    private String dto = "dto";
-//    private String domainEntity = "domainEntity";
+
+    /**
+     * dto
+     */
+    private String dto = "dto";
+
+    /**
+     * domainEntity
+     */
+    private String domainEntity = "domainEntity";
 
     /**
      * 路径配置信息
@@ -141,6 +149,8 @@ public class PackageConfig {
             packageInfo.put(ConstVal.PARENT, this.getParent());
 
             packageInfo.put(ConstVal.MAPSTRUCT, this.joinPackage(this.getMapstruct()));
+            packageInfo.put(ConstVal.DTO,this.joinPackage(this.getDto()));
+            packageInfo.put(ConstVal.DOMAIN_ENTITY,this.joinPackage(this.getDomainEntity()));
         }
         return Collections.unmodifiableMap(this.packageInfo);
     }
@@ -190,6 +200,14 @@ public class PackageConfig {
 
     public String getMapstruct() {
         return mapstruct;
+    }
+
+    public String getDto() {
+        return dto;
+    }
+
+    public String getDomainEntity() {
+        return domainEntity;
     }
 
     public Map<OutputFile, String> getPathInfo() {

@@ -70,9 +70,20 @@ public class TemplateConfig {
      */
     private String enumerate;
 
+    /**
+     * mapstruct转含泪
+     */
     private String mapStruct;
-//    private String dto;
-//    private String domainEntity;
+
+    /**
+     * dto类
+     */
+    private String dto;
+
+    /**
+     * 领域模型
+     */
+    private String domainEntity;
 
     /**
      * 是否禁用实体模板（默认 false）
@@ -159,6 +170,12 @@ public class TemplateConfig {
                     case MAPSTRUCT:
                         this.mapStruct = null;
                         break;
+                    case DTO:
+                        this.dto = null;
+                        break;
+                    case DOMAIN_ENTITY:
+                        this.domainEntity = null;
+                        break;
                     default:
                 }
             }
@@ -202,6 +219,14 @@ public class TemplateConfig {
 
     public String getController() {
         return controller;
+    }
+
+    public String getDto(){
+        return dto;
+    }
+
+    public String getDomainEntity() {
+        return domainEntity;
     }
 
     /**
@@ -304,6 +329,17 @@ public class TemplateConfig {
 
         public Builder mapstruct(@NotNull String mapstructTemplate) {
             this.templateConfig.mapStruct = mapstructTemplate;
+            return this;
+        }
+
+
+        public Builder dto(){
+            this.templateConfig.dto = ConstVal.TEMPLATE_DTO;
+            return this;
+        }
+
+        public Builder domainEntity(){
+            this.templateConfig.domainEntity = ConstVal.TEMPLATE_DOMAIN_ENTITY;
             return this;
         }
 

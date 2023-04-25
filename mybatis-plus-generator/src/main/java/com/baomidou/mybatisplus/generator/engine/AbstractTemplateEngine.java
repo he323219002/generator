@@ -209,26 +209,22 @@ public abstract class AbstractTemplateEngine {
         }
     }
 
+
+
     /**
      * 输出Dto文件
      * @param tableInfo
      * @param objectMap
      */
     protected void outputDto(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
-//        String enumeratePath = getPathInfo(OutputFile.enumerate);
-//        if (CollectionUtils.isNotEmpty(tableInfo.getEnumerateList()) && StringUtils.isNotBlank(enumeratePath)) {
-//            getTemplateFilePath(TemplateConfig::getEnumerate).ifPresent(enumerate -> {
-//                List<TableField> enumerateList = (List<TableField>) objectMap.get("enumerateList");
-//                for (TableField enumerateField : enumerateList) {
-//                    // 更新处理字段
-//                    String columnName = NamingStrategy.capitalFirst(enumerateField.getColumnName());
-//                    enumerateField.setColumnName(columnName);
-//                    objectMap.put("curEnumField", enumerateField);
-//                    String enumerateFile = String.format(enumeratePath + File.separator + tableInfo.getEnumerateName() + suffixJavaOrKt(), columnName);
-//                    outputFile(new File(enumerateFile), objectMap, enumerate, getConfigBuilder().getStrategyConfig().enumerate().isFileOverride());
-//                }
-//            });
-//        }
+        String dtoPath = getPathInfo(OutputFile.dto);
+        if (StringUtils.isNotBlank(tableInfo.getDtoName()) && StringUtils.isNotBlank(dtoPath)) {
+            getTemplateFilePath(TemplateConfig::getDto).ifPresent(dto -> {
+                String entityName = tableInfo.getEntityName();
+                String dtoFile = String.format((dtoPath + File.separator + tableInfo.getDtoName() + suffixJavaOrKt()), entityName);
+                outputFile(new File(dtoFile), objectMap, dto, getConfigBuilder().getStrategyConfig().dto().isFileOverride());
+            });
+        }
     }
 
 
@@ -239,20 +235,14 @@ public abstract class AbstractTemplateEngine {
      * @param objectMap
      */
     protected void outputDomainEntity(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
-//        String enumeratePath = getPathInfo(OutputFile.enumerate);
-//        if (CollectionUtils.isNotEmpty(tableInfo.getEnumerateList()) && StringUtils.isNotBlank(enumeratePath)) {
-//            getTemplateFilePath(TemplateConfig::getEnumerate).ifPresent(enumerate -> {
-//                List<TableField> enumerateList = (List<TableField>) objectMap.get("enumerateList");
-//                for (TableField enumerateField : enumerateList) {
-//                    // 更新处理字段
-//                    String columnName = NamingStrategy.capitalFirst(enumerateField.getColumnName());
-//                    enumerateField.setColumnName(columnName);
-//                    objectMap.put("curEnumField", enumerateField);
-//                    String enumerateFile = String.format(enumeratePath + File.separator + tableInfo.getEnumerateName() + suffixJavaOrKt(), columnName);
-//                    outputFile(new File(enumerateFile), objectMap, enumerate, getConfigBuilder().getStrategyConfig().enumerate().isFileOverride());
-//                }
-//            });
-//        }
+        String domainEntityPath = getPathInfo(OutputFile.domainEntity);
+        if (StringUtils.isNotBlank(tableInfo.getDomainEntityName()) && StringUtils.isNotBlank(domainEntityPath)) {
+            getTemplateFilePath(TemplateConfig::getDomainEntity).ifPresent(domainEntity -> {
+                String entityName = tableInfo.getEntityName();
+                String domainEntityFile = String.format((domainEntityPath + File.separator + tableInfo.getDomainEntityName() + suffixJavaOrKt()), entityName);
+                outputFile(new File(domainEntityFile), objectMap, domainEntity, getConfigBuilder().getStrategyConfig().dto().isFileOverride());
+            });
+        }
     }
 
     /**
@@ -349,6 +339,11 @@ public abstract class AbstractTemplateEngine {
                 outputEnumerate(tableInfo, objectMap);
                 // mapstruct
                 outputMapStruct(tableInfo,objectMap);
+                // dto
+                outputDto(tableInfo,objectMap);
+                // domainEntity
+                outputDomainEntity(tableInfo,objectMap);
+
             });
         } catch (Exception e) {
             throw new RuntimeException("无法创建文件，请检查配置信息！", e);
@@ -457,6 +452,7 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("schemaName", schemaName);
         objectMap.put("table", tableInfo);
         objectMap.put("entity", tableInfo.getEntityName());
+        objectMap.put("domainEntity", tableInfo.getDomainEntityName());
         return objectMap;
     }
 

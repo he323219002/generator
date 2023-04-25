@@ -58,6 +58,16 @@ public class BaseBuilder implements IConfigBuilder<StrategyConfig> {
         return strategyConfig.mapstructBuilder();
     }
 
+    @NotNull
+    public Dto.Builder dtoBuilder(){
+        return strategyConfig.dtoBuilder();
+    }
+
+
+    @NotNull
+    public DomainEntity.Builder domainEntityBuilder(){
+        return strategyConfig.domainEntityBuilder();
+    }
 
 
     @NotNull
