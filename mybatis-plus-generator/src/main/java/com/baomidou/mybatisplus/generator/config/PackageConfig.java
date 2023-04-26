@@ -322,6 +322,11 @@ public class PackageConfig {
             return this;
         }
 
+        public Builder enumerate(@NotNull String enumerate){
+            this.packageConfig.enumerate = enumerate;
+            return this;
+        }
+
         /**
          * 路径配置信息
          *

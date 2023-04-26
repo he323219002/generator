@@ -4,6 +4,8 @@ package ${package.Entity};
 import ${pkg};
 </#list>
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import java.io.Serial;
 <#if (table.enumerateList?size > 0)>
 import ${package.Enum}.*;
 </#if>
@@ -17,6 +19,7 @@ import ${package.Enum}.*;
 * @author ${author}
 * @since ${date}
 */
+@EqualsAndHashCode(callSuper = false)
 @Data
 <#if table.convert>
 @TableName("${schemaName}${table.name}")
@@ -36,7 +39,7 @@ public class ${entity} implements Serializable {
 public class ${entity} {
 </#if>
 <#if entitySerialVersionUID>
-
+    @Serial
     private static final long serialVersionUID = 1L;
 </#if>
 <#-- ----------  BEGIN 字段循环遍历  ---------->
@@ -81,7 +84,7 @@ public class ${entity} {
     </#if>
     <#-- 乐观锁注解 -->
     <#if field.versionField>
-        @Version
+    @Version
     </#if>
     <#-- 逻辑删除注解 -->
     <#if field.logicDeleteField>

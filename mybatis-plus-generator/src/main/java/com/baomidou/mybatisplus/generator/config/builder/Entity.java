@@ -334,7 +334,7 @@ public class Entity implements ITemplate {
         data.put("entityLombokModel", this.lombok);
         data.put("entityBooleanColumnRemoveIsPrefix", this.booleanColumnRemoveIsPrefix);
         data.put("superEntityClass", ClassUtils.getSimpleName(this.superClass));
-        return data;
+         return data;
     }
 
     public static class Builder extends BaseBuilder {

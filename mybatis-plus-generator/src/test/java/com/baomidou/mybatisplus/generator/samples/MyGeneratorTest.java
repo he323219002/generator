@@ -1,12 +1,18 @@
 package com.baomidou.mybatisplus.generator.samples;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
+import com.baomidou.mybatisplus.generator.IFill;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.fill.Column;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Jimmy He
@@ -28,9 +34,11 @@ public class MyGeneratorTest extends BaseGeneratorTest {
             })
 
             .packageConfig(builder -> {
-                builder.parent("com.baomidou.mybatisplus.samples.generator") // 设置父包名
-                    .moduleName("system") // 设置父包模块名
+                builder.parent("com.jframe.basic") // 设置父包名
+//                    .moduleName("acc") // 设置父包模块名
                     .pathInfo(Collections.singletonMap(OutputFile.xml, "D:\\code\\generator\\generate-code\\mapper")); // 设置mapperXml生成路径
+                builder.enumerate("domain.acc.enumerate");
+                builder.entity("acc.gatewayimpl.database.dataobject");
             })
             .strategyConfig(builder -> {
                 builder.addInclude("acc_account") // 设置需要生成的表名
@@ -45,7 +53,22 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                     .enableFileOverride()
                     .domainEntityBuilder()
                     .enableFileOverride()
+                    .entityBuilder()
+                    .logicDeletePropertyName("deleted")
+                    .versionPropertyName("version")
+                    .addTableFills(List.of(new Column("create_time", FieldFill.INSERT)
+                        , new Column("create_user_id", FieldFill.INSERT)
+                        , new Column("update_time", FieldFill.INSERT_UPDATE)
+                        , new Column("update_user_id", FieldFill.INSERT_UPDATE)))
+//                    .addTableFills(new Column("create_time", FieldFill.INSERT)) // 自动填充配置
+//                    .addTableFills(new Property("update_time", FieldFill.INSERT_UPDATE))
+
+                    // TableField注解
+                    .enableTableFieldAnnotation()
+                    .superClass("com.jframe.base.Dbo")
+                    .enableFileOverride()
                 ; // 设置过滤表前缀
+
             })
             .templateConfig(builder -> {
 //             禁用模板类型
@@ -56,6 +79,8 @@ public class MyGeneratorTest extends BaseGeneratorTest {
             })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();
+
+//        Map<OutputFile, String> pathInfoMap = new HashMap<>();
     }
 
 

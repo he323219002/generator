@@ -81,7 +81,6 @@ public class Enumerate implements ITemplate {
     @NotNull
     public Map<String, Object> renderData(@NotNull TableInfo tableInfo) {
         Map<String, Object> data = new HashMap<>(2);
-        data.put("superEntityClass", ClassUtils.getSimpleName(this.superClass));
         data.put("enumerateList", tableInfo.getEnumerateList());
         return data;
     }

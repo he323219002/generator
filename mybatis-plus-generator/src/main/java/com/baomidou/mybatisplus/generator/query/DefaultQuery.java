@@ -103,6 +103,7 @@ public class DefaultQuery extends AbstractDatabaseQuery {
             TableField field = new TableField(this.configBuilder, columnName);
             // 处理ID
             if (columnInfo.isPrimaryKey()) {
+//                field.primaryKey(true);
                 field.primaryKey(columnInfo.isAutoIncrement());
                 tableInfo.setHavePrimaryKey(true);
                 if (field.isKeyIdentityFlag() && entity.getIdType() != null) {
