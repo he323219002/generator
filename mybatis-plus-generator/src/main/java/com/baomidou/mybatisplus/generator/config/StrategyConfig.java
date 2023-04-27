@@ -121,6 +121,8 @@ public class StrategyConfig {
 
     private final Service.Builder serviceBuilder = new Service.Builder(this);
 
+    private final Gateway.Builder gatewayBuilder = new Gateway.Builder(this);
+
     private final Enumerate.Builder enumerateBuilder = new Enumerate.Builder(this);
 
     private final Mapstruct.Builder mapstructBuilder = new Mapstruct.Builder(this);
@@ -136,6 +138,8 @@ public class StrategyConfig {
     private Mapper mapper;
 
     private Service service;
+
+    private Gateway gateway;
 
     private Enumerate enumerate;
 
@@ -306,6 +310,11 @@ public class StrategyConfig {
         return serviceBuilder;
     }
 
+    @NotNull
+    public Gateway.Builder gatewayBuilder() {
+        return gatewayBuilder;
+    }
+
     /**
      * Service配置
      *
@@ -319,6 +328,21 @@ public class StrategyConfig {
         }
         return service;
     }
+
+    /**
+     * Service配置
+     *
+     * @return Service配置
+     * @since 3.5.0
+     */
+    @NotNull
+    public Gateway gateway() {
+        if (gateway == null) {
+            this.gateway = gatewayBuilder.get();
+        }
+        return gateway;
+    }
+
 
     /**
      * 大写命名、字段符合大写字母数字下划线命名

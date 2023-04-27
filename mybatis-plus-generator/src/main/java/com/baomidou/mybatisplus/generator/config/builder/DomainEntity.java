@@ -19,13 +19,13 @@ import com.baomidou.mybatisplus.generator.ITemplate;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.function.ConverterFileName;
+import com.baomidou.mybatisplus.generator.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 控制器属性配置
@@ -34,6 +34,24 @@ import java.util.Map;
  * @since 3.5.0
  */
 public class DomainEntity implements ITemplate {
+
+    /**
+     * 自定义忽略字段
+     * https://github.com/baomidou/generator/issues/46
+     */
+    private final Set<String> ignoreColumns = new HashSet<>();
+
+    /**
+     * 匹配忽略字段(忽略大小写)
+     *
+     * @param fieldName 字段名
+     * @return 是否匹配
+     * @since 3.5.0
+     */
+    public boolean matchIgnoreColumns(String fieldName) {
+        return ignoreColumns.stream().anyMatch(e -> e.equalsIgnoreCase(fieldName));
+    }
+
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DomainEntity.class);
 
@@ -80,7 +98,7 @@ public class DomainEntity implements ITemplate {
     public Map<String, Object> renderData(@NotNull TableInfo tableInfo) {
         Map<String, Object> data = new HashMap<>(2);
         // todo 这里看看能否定定义包的位置
-//        data.put("superEntityClass", ClassUtils.getSimpleName(this.superClass));
+        data.put("superDomainEntityClass", ClassUtils.getSimpleName(this.superClass));
 //        data.put("enumerateList", tableInfo.getEnumerateList());
         return data;
     }
@@ -163,5 +181,23 @@ public class DomainEntity implements ITemplate {
         public DomainEntity get() {
             return this.domainEntity;
         }
+
+
+        /**
+         * 添加忽略字段
+         *
+         * @param ignoreColumns 需要忽略的字段(数据库字段列名)
+         * @return this
+         * @since 3.5.0
+         */
+        public Builder addIgnoreColumns(@NotNull String... ignoreColumns) {
+            return addIgnoreColumns(Arrays.asList(ignoreColumns));
+        }
+
+        public Builder addIgnoreColumns(@NotNull List<String> ignoreColumnList) {
+            this.domainEntity.ignoreColumns.addAll(ignoreColumnList);
+            return this;
+        }
+
     }
 }

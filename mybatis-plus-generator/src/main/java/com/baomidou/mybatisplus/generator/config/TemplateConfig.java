@@ -66,6 +66,16 @@ public class TemplateConfig {
     private String serviceImpl;
 
     /**
+     * 设置Gateway模板路径
+     */
+    private String gateway;
+
+    /**
+     * 设置GatewayImpl模板路径
+     */
+    private String gatewayImpl;
+
+    /**
      * 设置Enum模板路径
      */
     private String enumerate;
@@ -199,6 +209,14 @@ public class TemplateConfig {
 
     public String getServiceImpl() {
         return serviceImpl;
+    }
+
+    public String getGateway() {
+        return gateway;
+    }
+
+    public String getGatewayImpl() {
+        return gatewayImpl;
     }
 
     public String getEnumerate() {
@@ -342,6 +360,17 @@ public class TemplateConfig {
             this.templateConfig.domainEntity = ConstVal.TEMPLATE_DOMAIN_ENTITY;
             return this;
         }
+
+        public Builder gateway(){
+            this.templateConfig.gateway = ConstVal.TEMPLATE_GATEWAY;
+            return this;
+        }
+
+        public Builder gatewayImpl(){
+            this.templateConfig.gatewayImpl = ConstVal.TEMPLATE_GATEWAY_IMPL;
+            return this;
+        }
+
 
         /**
          * 设置mapper模板路径

@@ -94,6 +94,16 @@ public class TableInfo {
     private String serviceImplName;
 
     /**
+     * gateway
+     */
+    private String gatewayName;
+
+    /**
+     * gatewayImpl
+     */
+    private String gatewayImplName;
+
+    /**
      * controller名称
      */
     private String controllerName;
@@ -305,6 +315,7 @@ public class TableInfo {
 
     /**
      * 处理表信息(文件名与导包)
+     * 这里会处理类名和包名的拼接
      *
      * @since 3.5.0
      */
@@ -315,6 +326,8 @@ public class TableInfo {
         this.xmlName = strategyConfig.mapper().getConverterXmlFileName().convert(entityName);
         this.serviceName = strategyConfig.service().getConverterServiceFileName().convert(entityName);
         this.serviceImplName = strategyConfig.service().getConverterServiceImplFileName().convert(entityName);
+        this.gatewayName = strategyConfig.gateway().getConverterGatewayFileName().convert(entityName);
+        this.gatewayImplName = strategyConfig.gateway().getConverterGatewayImplFileName().convert(entityName);
         this.controllerName = strategyConfig.controller().getConverterFileName().convert(entityName);
         this.enumerateName = strategyConfig.enumerate().getConverterFileName().convert(entityName);
         this.mapstructName = strategyConfig.mapstruct().getConverterFileName().convert(entityName);
@@ -375,6 +388,14 @@ public class TableInfo {
 
     public String getServiceImplName() {
         return serviceImplName;
+    }
+
+    public String getGatewayName(){
+        return gatewayName;
+    }
+
+    public String getGatewayImplName() {
+        return gatewayImplName;
     }
 
     public String getControllerName() {

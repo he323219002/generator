@@ -35,14 +35,19 @@ public class MyGeneratorTest extends BaseGeneratorTest {
 
             .packageConfig(builder -> {
                 builder.parent("com.jframe.basic") // 设置父包名
-//                    .moduleName("acc") // 设置父包模块名
+                    .moduleName("acc") // 设置父包模块名
                     .pathInfo(Collections.singletonMap(OutputFile.xml, "D:\\code\\generator\\generate-code\\mapper")); // 设置mapperXml生成路径
-                builder.enumerate("domain.acc.enumerate");
-                builder.entity("acc.gatewayimpl.database.dataobject");
-                builder.mapper("acc.gatewayimpl.database.mapper");
-                builder.mapstruct("acc.convetor");
-                builder.domainEntity("domain.acc.entity");
-                builder.dto("acc.dto.data");
+                builder.enumerate("domain.enumerate");
+                builder.entity("gatewayimpl.database.dataobject");
+                builder.mapper("gatewayimpl.database.mapper");
+                builder.mapstruct("convetor");
+                builder.domainEntity("domain.entity");
+                builder.dto("dto.data");
+                builder.service("api");
+                builder.serviceImpl("service");
+                builder.controller("web");
+                builder.gateway("domain.gateway");
+                builder.gatewayImpl("gatewayimpl");
             })
             .strategyConfig(builder -> {
                 builder.addInclude("acc_account") // 设置需要生成的表名
@@ -56,6 +61,9 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                     .dtoBuilder()
                     .enableFileOverride()
                     .domainEntityBuilder()
+                    .addIgnoreColumns("version","deleted","create_user_id","create_time","update_user_id","update_time")
+
+                    .superClass("com.jframe.base.Entity")
                     .enableFileOverride()
                     .entityBuilder()
                     .logicDeletePropertyName("deleted")
@@ -70,6 +78,9 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                     // TableField注解
                     .enableTableFieldAnnotation()
                     .superClass("com.jframe.base.Dbo")
+//                    .addIgnoreColumns("version","deleted","create_user_id","create_time","update_user_id","update_time")
+                    .enableFileOverride()
+                    .gatewayBuilder()
                     .enableFileOverride()
                 ; // 设置过滤表前缀
 
@@ -80,6 +91,8 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                 builder.mapstruct();
                 builder.dto();
                 builder.domainEntity();
+                builder.gateway();
+                builder.gatewayImpl();
             })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();

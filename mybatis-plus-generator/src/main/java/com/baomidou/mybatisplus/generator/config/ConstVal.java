@@ -32,6 +32,8 @@ public interface ConstVal {
     String ENTITY = "Entity";
     String SERVICE = "Service";
     String SERVICE_IMPL = "ServiceImpl";
+    String GATEWAY = "Gateway";
+    String GATEWAY_IMPL = "GatewayImpl";
     String MAPPER = "Mapper";
     String XML = "Xml";
     String CONTROLLER = "Controller";
@@ -84,6 +86,10 @@ public interface ConstVal {
      * ServiceImpl模板路径
      */
     String TEMPLATE_SERVICE_IMPL = "/templates/serviceImpl.java";
+
+
+    String TEMPLATE_GATEWAY = "/templates/gateway.java";
+    String TEMPLATE_GATEWAY_IMPL = "/templates/gatewayImpl.java";
 
     /**
      * Enum模板路径

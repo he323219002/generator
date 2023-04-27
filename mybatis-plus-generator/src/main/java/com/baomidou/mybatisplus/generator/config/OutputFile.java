@@ -25,6 +25,8 @@ public enum OutputFile {
     entity,
     service,
     serviceImpl,
+    gateway,
+    gatewayImpl,
     mapper,
     xml,
     controller,

@@ -59,6 +59,11 @@ public class PackageConfig {
      */
     private String serviceImpl = "service.impl";
 
+
+    private String gateway = "gateway";
+
+    private String gatewayImpl = "gateway.impl";
+
     /**
      * Mapper包名
      */
@@ -144,6 +149,8 @@ public class PackageConfig {
             packageInfo.put(ConstVal.XML, this.joinPackage(this.getXml()));
             packageInfo.put(ConstVal.SERVICE, this.joinPackage(this.getService()));
             packageInfo.put(ConstVal.SERVICE_IMPL, this.joinPackage(this.getServiceImpl()));
+            packageInfo.put(ConstVal.GATEWAY, this.joinPackage(this.getGateway()));
+            packageInfo.put(ConstVal.GATEWAY_IMPL, this.joinPackage(this.getGatewayImpl()));
             packageInfo.put(ConstVal.CONTROLLER, this.joinPackage(this.getController()));
             packageInfo.put(ConstVal.ENUMERATE, this.joinPackage(this.getEnumerate()));
             packageInfo.put(ConstVal.PARENT, this.getParent());
@@ -180,6 +187,14 @@ public class PackageConfig {
 
     public String getServiceImpl() {
         return serviceImpl;
+    }
+
+    public String getGateway() {
+        return gateway;
+    }
+
+    public String getGatewayImpl() {
+        return gatewayImpl;
     }
 
     public String getMapper() {
@@ -286,6 +301,17 @@ public class PackageConfig {
          */
         public Builder serviceImpl(@NotNull String serviceImpl) {
             this.packageConfig.serviceImpl = serviceImpl;
+            return this;
+        }
+
+
+        public Builder gateway(@NotNull String gateway){
+            this.packageConfig.gateway = gateway;
+            return this;
+        }
+
+        public Builder gatewayImpl(@NotNull String gatewayImpl){
+            this.packageConfig.gatewayImpl = gatewayImpl;
             return this;
         }
 

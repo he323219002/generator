@@ -54,6 +54,11 @@ public class BaseBuilder implements IConfigBuilder<StrategyConfig> {
     }
 
     @NotNull
+    public Gateway.Builder gatewayBuilder(){
+        return strategyConfig.gatewayBuilder();
+    }
+
+    @NotNull
     public Mapstruct.Builder mapstructBuilder() {
         return strategyConfig.mapstructBuilder();
     }

@@ -153,6 +153,33 @@ public abstract class AbstractTemplateEngine {
     }
 
     /**
+     * 输出gateway文件
+     *
+     * @param tableInfo 表信息
+     * @param objectMap 渲染数据
+     * @since 3.5.0
+     */
+    protected void outputGateway(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
+
+        String entityName = tableInfo.getEntityName();
+        String gatewayPath = getPathInfo(OutputFile.gateway);
+        if (StringUtils.isNotBlank(tableInfo.getGatewayName()) && StringUtils.isNotBlank(gatewayPath)) {
+            getTemplateFilePath(TemplateConfig::getGateway).ifPresent(gateway -> {
+                String gatewayFile = String.format((gatewayPath + File.separator + tableInfo.getGatewayName() + suffixJavaOrKt()), entityName);
+                outputFile(new File(gatewayFile), objectMap, gateway, getConfigBuilder().getStrategyConfig().gateway().isFileOverride());
+            });
+        }
+
+        String gatewayImplPath = getPathInfo(OutputFile.gatewayImpl);
+        if (StringUtils.isNotBlank(tableInfo.getServiceImplName()) && StringUtils.isNotBlank(gatewayImplPath)) {
+            getTemplateFilePath(TemplateConfig::getGatewayImpl).ifPresent(gatewayImpl -> {
+                String implFile = String.format((gatewayImplPath + File.separator + tableInfo.getGatewayImplName() + suffixJavaOrKt()), entityName);
+                outputFile(new File(implFile), objectMap, gatewayImpl, getConfigBuilder().getStrategyConfig().gateway().isFileOverride());
+            });
+        }
+    }
+
+    /**
      * 输出controller文件
      *
      * @param tableInfo 表信息
@@ -333,6 +360,8 @@ public abstract class AbstractTemplateEngine {
                 outputMapper(tableInfo, objectMap);
                 // service
                 outputService(tableInfo, objectMap);
+                // gateway
+                outputGateway(tableInfo,objectMap);
                 // controller
                 outputController(tableInfo, objectMap);
                 // enumerate
@@ -431,6 +460,8 @@ public abstract class AbstractTemplateEngine {
         objectMap.putAll(entityData);
         Map<String, Object> enumerateData = strategyConfig.enumerate().renderData(tableInfo);
         objectMap.putAll(enumerateData);
+        Map<String, Object> domainEntityDate = strategyConfig.domainEntity().renderData(tableInfo);
+        objectMap.putAll(domainEntityDate);
         objectMap.put("config", config);
         objectMap.put("package", config.getPackageConfig().getPackageInfo());
         GlobalConfig globalConfig = config.getGlobalConfig();

@@ -76,6 +76,8 @@ class PathInfoHandler {
         putPathInfo(templateConfig.getEnumerate(), OutputFile.enumerate, ConstVal.ENUMERATE);
         putPathInfo(OutputFile.parent, ConstVal.PARENT);
 
+        putPathInfo(templateConfig.getGateway(), OutputFile.gateway, ConstVal.GATEWAY);
+        putPathInfo(templateConfig.getGatewayImpl(), OutputFile.gatewayImpl, ConstVal.GATEWAY_IMPL);
         putPathInfo(templateConfig.getMapStruct(),OutputFile.mapstruct,ConstVal.MAPSTRUCT);
         putPathInfo(templateConfig.getDto(),OutputFile.dto,ConstVal.DTO);
         putPathInfo(templateConfig.getDomainEntity(),OutputFile.domainEntity,ConstVal.DOMAIN_ENTITY);
