@@ -453,6 +453,7 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("table", tableInfo);
         objectMap.put("entity", tableInfo.getEntityName());
         objectMap.put("domainEntity", tableInfo.getDomainEntityName());
+        objectMap.put("dto", tableInfo.getDtoName());
         return objectMap;
     }
 

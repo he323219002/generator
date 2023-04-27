@@ -327,6 +327,22 @@ public class PackageConfig {
             return this;
         }
 
+        public Builder mapstruct(@NotNull String mapstruct){
+            this.packageConfig.mapstruct = mapstruct;
+            return this;
+        }
+
+        public Builder dto(@NotNull String dto){
+            this.packageConfig.dto = dto;
+            return this;
+        }
+
+        public Builder domainEntity(@NotNull String domainEntity){
+            this.packageConfig.domainEntity = domainEntity;
+            return this;
+        }
+
+
         /**
          * 路径配置信息
          *

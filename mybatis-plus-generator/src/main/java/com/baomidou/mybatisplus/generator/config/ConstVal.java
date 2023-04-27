@@ -38,7 +38,7 @@ public interface ConstVal {
     String ENUMERATE = "Enum";
     String PARENT = "Parent";
     String MAPSTRUCT = "MapStruct";
-    String DOMAIN_ENTITY = "DOMAIN_ENTITY";
+    String DOMAIN_ENTITY = "DomainEntity";
     String DTO = "Dto";
 
 

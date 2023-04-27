@@ -20,7 +20,6 @@ import ${package.Enum}.*;
 * @since ${date}
 */
 @EqualsAndHashCode(callSuper = false)
-@Data
 <#if table.convert>
 @TableName("${schemaName}${table.name}")
 </#if>
