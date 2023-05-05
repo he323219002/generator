@@ -1,4 +1,4 @@
-package ${package.Dto}
+package ${package.Dto};
 
 import com.jframe.base.Dto;
 

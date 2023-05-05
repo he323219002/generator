@@ -50,7 +50,7 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                 builder.gatewayImpl("gatewayimpl");
             })
             .strategyConfig(builder -> {
-                builder.addInclude("acc_account") // 设置需要生成的表名
+                builder.addInclude("acc_business_account") // 设置需要生成的表名
                     .addTablePrefix("acc_", "c_")
                     .entityBuilder().formatFileName("%sDbo")
                     .enableFileOverride()

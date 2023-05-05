@@ -123,7 +123,7 @@ public class DefaultQuery extends AbstractDatabaseQuery {
             field.setEnumerate(false);
             if (CollectionUtils.isNotEmpty(enumerateFieldList)) {
                 String enumName = String.format("%s%sEnum",  entity.getNameConvert().entityNameConvert(tableInfo),
-                    NamingStrategy.capitalFirst(field.getColumnName()));
+                    NamingStrategy.capitalFirst(propertyName));
                 field.setEnumerateName(enumName);
                 field.setEnumerateMapList(enumerateFieldList);
                 field.setEnumerate(true);

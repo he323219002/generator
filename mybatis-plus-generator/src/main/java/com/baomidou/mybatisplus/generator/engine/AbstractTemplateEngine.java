@@ -210,7 +210,7 @@ public abstract class AbstractTemplateEngine {
                 List<TableField> enumerateList = (List<TableField>) objectMap.get("enumerateList");
                 for (TableField enumerateField : enumerateList) {
                     // 更新处理字段
-                    String columnName = NamingStrategy.capitalFirst(enumerateField.getColumnName());
+                    String columnName = NamingStrategy.capitalFirst(enumerateField.getPropertyName());
                     enumerateField.setColumnName(columnName);
                     objectMap.put("curEnumField", enumerateField);
                     String enumerateFile = String.format(enumeratePath + File.separator + tableInfo.getEnumerateName() + suffixJavaOrKt(), columnName);
