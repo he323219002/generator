@@ -74,6 +74,10 @@ public class BaseBuilder implements IConfigBuilder<StrategyConfig> {
         return strategyConfig.domainEntityBuilder();
     }
 
+    @NotNull
+    public Repository.Builder repositoryBuilder() {
+        return strategyConfig.repositoryBuilder();
+    }
 
     @NotNull
     @Override

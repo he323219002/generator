@@ -48,9 +48,10 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                 builder.controller("web");
                 builder.gateway("domain.gateway");
                 builder.gatewayImpl("gatewayimpl");
+                builder.repository("gatewayimpl.database.repository");
             })
             .strategyConfig(builder -> {
-                builder.addInclude("acc_business_account") // 设置需要生成的表名
+                builder.addInclude("acc_business_account,acc_account") // 设置需要生成的表名
                     .addTablePrefix("acc_", "c_")
                     .entityBuilder().formatFileName("%sDbo")
                     .enableFileOverride()
@@ -82,6 +83,8 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                     .enableFileOverride()
                     .gatewayBuilder()
                     .enableFileOverride()
+                    .repositoryBuilder()
+                    .enableFileOverride()
                 ; // 设置过滤表前缀
 
             })
@@ -93,6 +96,7 @@ public class MyGeneratorTest extends BaseGeneratorTest {
                 builder.domainEntity();
                 builder.gateway();
                 builder.gatewayImpl();
+                builder.repository();
             })
             .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
             .execute();

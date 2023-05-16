@@ -128,6 +128,11 @@ public class TableInfo {
      */
     private String dtoName;
 
+    /**
+     * repository名称
+     */
+    private String repositoryName;
+
 
     /**
      * 枚举字段
@@ -333,6 +338,7 @@ public class TableInfo {
         this.mapstructName = strategyConfig.mapstruct().getConverterFileName().convert(entityName);
         this.dtoName = strategyConfig.dto().getConverterFileName().convert(entityName);
         this.domainEntityName = strategyConfig.domainEntity().getConverterFileName().convert(entityName);
+        this.repositoryName = strategyConfig.repository().getConverterFileName().convert(entityName);
         this.importPackage();
     }
 
@@ -416,6 +422,10 @@ public class TableInfo {
 
     public String getDomainEntityName() {
         return domainEntityName;
+    }
+
+    public String getRepositoryName() {
+        return repositoryName;
     }
 
     public String getDtoName() {

@@ -131,6 +131,8 @@ public class StrategyConfig {
 
     private final DomainEntity.Builder domainEntityBuilder = new DomainEntity.Builder(this);
 
+    private final Repository.Builder repositoryBuilder = new Repository.Builder(this);
+
     private Entity entity;
 
     private Controller controller;
@@ -148,6 +150,8 @@ public class StrategyConfig {
     private Dto dto;
 
     private DomainEntity domainEntity;
+
+    private Repository repository;
 
 
     /**
@@ -234,6 +238,11 @@ public class StrategyConfig {
         return domainEntityBuilder;
     }
 
+    @NotNull
+    public Repository.Builder repositoryBuilder() {
+        return repositoryBuilder;
+    }
+
     /**
      * mapstruct配置
      *
@@ -245,6 +254,14 @@ public class StrategyConfig {
             this.mapstruct = mapstructBuilder.get();
         }
         return mapstruct;
+    }
+
+    @NotNull
+    public Repository repository(){
+        if (repository == null) {
+            this.repository = repositoryBuilder.get();
+        }
+        return repository;
     }
 
     /**

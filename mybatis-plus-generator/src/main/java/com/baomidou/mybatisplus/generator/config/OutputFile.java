@@ -39,6 +39,7 @@ public enum OutputFile {
     other,
     parent,
     domainEntity,
-    dto
+    dto,
+    repository,
     ;
 }

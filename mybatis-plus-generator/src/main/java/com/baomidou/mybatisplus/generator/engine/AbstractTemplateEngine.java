@@ -272,6 +272,23 @@ public abstract class AbstractTemplateEngine {
         }
     }
 
+
+    /**
+     * 输出Repository文件
+     * @param tableInfo
+     * @param objectMap
+     */
+    protected void outputRepository(@NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
+        String repositoryPath = getPathInfo(OutputFile.repository);
+        if (StringUtils.isNotBlank(tableInfo.getRepositoryName()) && StringUtils.isNotBlank(repositoryPath)) {
+            getTemplateFilePath(TemplateConfig::getRepository).ifPresent(repository -> {
+                String repositoryName = tableInfo.getRepositoryName();
+                String repositoryFile = String.format((repositoryPath + File.separator + tableInfo.getRepositoryName() + suffixJavaOrKt()), repositoryName);
+                outputFile(new File(repositoryFile), objectMap, repository, getConfigBuilder().getStrategyConfig().dto().isFileOverride());
+            });
+        }
+    }
+
     /**
      * 输出文件（3.5.4版本会删除此方法）
      *
@@ -372,6 +389,8 @@ public abstract class AbstractTemplateEngine {
                 outputDto(tableInfo,objectMap);
                 // domainEntity
                 outputDomainEntity(tableInfo,objectMap);
+                // repository
+                outputRepository(tableInfo,objectMap);
 
             });
         } catch (Exception e) {

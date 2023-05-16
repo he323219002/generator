@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 * @since ${date}
 */
 @Component
-public class ${table.gatewayImplName}  implements ${table.gatewayName} {
+public class ${table.gatewayImplName} implements ${table.gatewayName} {
 
 }

@@ -96,6 +96,11 @@ public class TemplateConfig {
     private String domainEntity;
 
     /**
+     * repository对象
+     */
+    private String repository;
+
+    /**
      * 是否禁用实体模板（默认 false）
      */
     private boolean disableEntity;
@@ -247,6 +252,10 @@ public class TemplateConfig {
         return domainEntity;
     }
 
+    public String getRepository() {
+        return repository;
+    }
+
     /**
      * 模板路径配置构建者
      *
@@ -368,6 +377,11 @@ public class TemplateConfig {
 
         public Builder gatewayImpl(){
             this.templateConfig.gatewayImpl = ConstVal.TEMPLATE_GATEWAY_IMPL;
+            return this;
+        }
+
+        public Builder repository(){
+            this.templateConfig.repository = ConstVal.TEMPLATE_REPOSITORY;
             return this;
         }
 

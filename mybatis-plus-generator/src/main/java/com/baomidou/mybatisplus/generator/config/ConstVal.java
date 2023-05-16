@@ -42,6 +42,7 @@ public interface ConstVal {
     String MAPSTRUCT = "MapStruct";
     String DOMAIN_ENTITY = "DomainEntity";
     String DTO = "Dto";
+    String REPOSITORY = "Repository";
 
 
     String JAVA_TMPDIR = "java.io.tmpdir";
@@ -99,6 +100,7 @@ public interface ConstVal {
     String TEMPLATE_MAPSTRUCT = "/templates/mapstruct.java";
     String TEMPLATE_DTO = "/templates/dto.java";
     String TEMPLATE_DOMAIN_ENTITY = "/templates/domainEntity.java";
+    String TEMPLATE_REPOSITORY = "/templates/repository.java";
 
 
     String VM_LOAD_PATH_KEY = "file.resource.loader.class";

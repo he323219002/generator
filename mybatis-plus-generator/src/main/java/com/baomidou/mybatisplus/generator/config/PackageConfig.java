@@ -100,6 +100,11 @@ public class PackageConfig {
     private String domainEntity = "domainEntity";
 
     /**
+     * repository
+     */
+    private String repository = "repository";
+
+    /**
      * 路径配置信息
      */
     private Map<OutputFile, String> pathInfo;
@@ -156,8 +161,9 @@ public class PackageConfig {
             packageInfo.put(ConstVal.PARENT, this.getParent());
 
             packageInfo.put(ConstVal.MAPSTRUCT, this.joinPackage(this.getMapstruct()));
-            packageInfo.put(ConstVal.DTO,this.joinPackage(this.getDto()));
-            packageInfo.put(ConstVal.DOMAIN_ENTITY,this.joinPackage(this.getDomainEntity()));
+            packageInfo.put(ConstVal.DTO, this.joinPackage(this.getDto()));
+            packageInfo.put(ConstVal.DOMAIN_ENTITY, this.joinPackage(this.getDomainEntity()));
+            packageInfo.put(ConstVal.REPOSITORY, this.joinPackage(this.getRepository()));
         }
         return Collections.unmodifiableMap(this.packageInfo);
     }
@@ -223,6 +229,10 @@ public class PackageConfig {
 
     public String getDomainEntity() {
         return domainEntity;
+    }
+
+    public String getRepository() {
+        return repository;
     }
 
     public Map<OutputFile, String> getPathInfo() {
@@ -305,12 +315,12 @@ public class PackageConfig {
         }
 
 
-        public Builder gateway(@NotNull String gateway){
+        public Builder gateway(@NotNull String gateway) {
             this.packageConfig.gateway = gateway;
             return this;
         }
 
-        public Builder gatewayImpl(@NotNull String gatewayImpl){
+        public Builder gatewayImpl(@NotNull String gatewayImpl) {
             this.packageConfig.gatewayImpl = gatewayImpl;
             return this;
         }
@@ -348,23 +358,28 @@ public class PackageConfig {
             return this;
         }
 
-        public Builder enumerate(@NotNull String enumerate){
+        public Builder enumerate(@NotNull String enumerate) {
             this.packageConfig.enumerate = enumerate;
             return this;
         }
 
-        public Builder mapstruct(@NotNull String mapstruct){
+        public Builder mapstruct(@NotNull String mapstruct) {
             this.packageConfig.mapstruct = mapstruct;
             return this;
         }
 
-        public Builder dto(@NotNull String dto){
+        public Builder dto(@NotNull String dto) {
             this.packageConfig.dto = dto;
             return this;
         }
 
-        public Builder domainEntity(@NotNull String domainEntity){
+        public Builder domainEntity(@NotNull String domainEntity) {
             this.packageConfig.domainEntity = domainEntity;
+            return this;
+        }
+
+        public Builder repository(@NotNull String repository) {
+            this.packageConfig.repository = repository;
             return this;
         }
 
